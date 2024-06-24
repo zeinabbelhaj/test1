@@ -20,10 +20,17 @@ jobs:
           fetch-depth: 0
 
       - name: Qodana Scan
-        uses: JetBrains/qodana-action@v2023.3
+        id: qodana_scan
+        uses: JetBrains/qodana-action@v2024.1
         with:
           args: --apply-fixes
           pr-mode: false
           push-fixes: pull-request
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
+
+      - name: Debug Qodana Output
+        if: ${{ failure() }}
+        run: |
+          echo "Qodana scan failed with exit code ${{ steps.qodana_scan.exit-code }}"
+          # Add additional debugging commands here if needed
