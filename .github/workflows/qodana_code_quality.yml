@@ -23,8 +23,10 @@ jobs:
         id: qodana_scan
         uses: JetBrains/qodana-action@v2024.1
         with:
-          args: -e,ORG_GRADLE_PROJECT_onstructiveUsername=${{ secrets.M2_USER }},-e,ORG_GRADLE_PROJECT_onstructivePassword=${{ secrets.M2_PWD }}
-
+          args: |
+            -e ORG_GRADLE_PROJECT_onstructiveUsername=${{ secrets.M2_USER }}
+            -e ORG_GRADLE_PROJECT_onstructivePassword=${{ secrets.M2_PWD }}
+            --apply-fixes
           pr-mode: false
           push-fixes: pull-request
         env:
